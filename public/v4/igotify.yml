@@ -1,0 +1,76 @@
+{
+  "captainVersion": "4",
+  "caproverOneClickApp": {
+    "variables": [
+      {
+        "id": "GOTIFY_URLS",
+        "label": "Gotify Server URLs (optional)",
+        "description": "Semikolongetrennte Liste deiner Gotify-Server, z.B. http://gotify;http://gotify2",
+        "defaultValue": ""
+      },
+      {
+        "id": "GOTIFY_CLIENT_TOKENS",
+        "label": "Gotify Client Tokens (optional)",
+        "description": "Semikolongetrennte Liste deiner Client Tokens, z.B. cXXXXXXXX;cYYYYYYY",
+        "defaultValue": ""
+      },
+      {
+        "id": "SECNTFY_TOKENS",
+        "label": "SecNtfy Device Tokens (optional)",
+        "description": "Gerätetoken aus der iGotify-App, z.B. NTFY-DEVICE-XXXXXX",
+        "defaultValue": ""
+      },
+      {
+        "id": "ENABLE_CONSOLE_LOG",
+        "label": "Console Logging aktivieren",
+        "description": "Setze 'true', um Logging auf der Konsole zu aktivieren.",
+        "defaultValue": "'true'"
+      },
+      {
+        "id": "ENABLE_SCALAR_UI",
+        "label": "Scalar UI aktivieren",
+        "description": "Setze 'true', um die API Endpoint-Seite aktiv zu lassen.",
+        "defaultValue": "'true'"
+      }
+    ],
+    "instructions": {
+      "start": "Dieses Template installiert nur den iGotify-Notification-Assistent. Stelle sicher, dass dein Gotify-Server bereits läuft.",
+      "end": "Nach der Installation kannst du in der CapRover UI den Port auf 8080 exposen oder über eine Custom Domain ansprechen."
+    }
+  },
+  "services": {
+    "$$cap_appname": {
+      "image": "ghcr.io/androidseb25/igotify-notification-assist:latest",
+      "containerHttpPort": "8080",
+      "restartPolicy": "unless-stopped",
+      "volumes": [
+        {
+          "container": "/app/data",
+          "host": "igotify-data"
+        }
+      ],
+      "envs": [
+        {
+          "key": "GOTIFY_URLS",
+          "value": "$$GOTIFY_URLS"
+        },
+        {
+          "key": "GOTIFY_CLIENT_TOKENS",
+          "value": "$$GOTIFY_CLIENT_TOKENS"
+        },
+        {
+          "key": "SECNTFY_TOKENS",
+          "value": "$$SECNTFY_TOKENS"
+        },
+        {
+          "key": "ENABLE_CONSOLE_LOG",
+          "value": "$$ENABLE_CONSOLE_LOG"
+        },
+        {
+          "key": "ENABLE_SCALAR_UI",
+          "value": "$$ENABLE_SCALAR_UI"
+        }
+      ]
+    }
+  }
+}
